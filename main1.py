@@ -12,25 +12,25 @@ logger = logging.getLogger(__name__)
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 MARGIN = 30
-SCREEN_TITLE = "Particle Exercise"
+SCREEN_TITLE = "Rain"
 
-PARTICLE_MIN_SCALE = 0.01
-PARTICLE_MAX_SCALE = 0.08
-PARTICLE_MIN_X = -20
-PARTICLE_MAX_X = 20
+PARTICLE_MIN_SCALE = 0.02
+PARTICLE_MAX_SCALE = 0.02
+PARTICLE_MIN_X = -220
+PARTICLE_MAX_X = 0
 PARTICLE_VELOCITY_X = 0
-PARTICLE_VELOCITY_Y = 4
-PARTICLE_MIN_AX = -0.1
-PARTICLE_MAX_AX = 0.1
-PARTICLE_MIN_AY = -0.1
-PARTICLE_MAX_AY = 0.1
-PARTICLE_MIN_DECAY = 0.001
-PARTICLE_MAX_DECAY = 0.01
+PARTICLE_VELOCITY_Y = -7
+PARTICLE_MIN_AX = -0.17
+PARTICLE_MAX_AX = 0
+PARTICLE_MIN_AY = -0.17
+PARTICLE_MAX_AY = 0
+PARTICLE_MIN_DECAY = 0.02
+PARTICLE_MAX_DECAY = 0.02
 
 
 class Particle(arcade.Sprite):
     def __init__(self, asset, scale, x, y, dx, dy, ax, ay, decay):
-        super().__init__("assets/{}.png".format(asset), scale)
+        super().__init__("assets/trace_03.png".format(asset), scale)
         self.center_x = x
         self.center_y = y
         self.dx = dx
@@ -41,16 +41,8 @@ class Particle(arcade.Sprite):
         self.color_pos = 0
 
         self.particle_colors = [
-            (open_color.red_5, 4)
-            ,(open_color.red_4, 5)
-            ,(open_color.red_3, 6)
-            ,(open_color.red_2, 7)
-            ,(open_color.red_1, 8)
-            ,(open_color.teal_1, 8)
-            ,(open_color.teal_2, 7)
-            ,(open_color.teal_3, 6)
-            ,(open_color.teal_4, 5)
-            ,(open_color.teal_5, 4)
+            (open_color.blue_2, 1)
+            ,(open_color.blue_4, 5)
         ]
         (self.color, self.lifetime) = self.particle_colors[self.color_pos]
         self.alive = True
@@ -64,8 +56,8 @@ class Particle(arcade.Sprite):
         self.scale -= self.decay
         if self.scale < self.decay:
             self.scale = self.decay
-        self.lifetime -= 1
-        if self.lifetime <= 0:
+        self.lifetime -= 1000
+        if self.lifetime <= 1000:
             self.color_pos += 1
             if self.color_pos >= len(self.particle_colors):
                 self.alive = False
@@ -110,7 +102,7 @@ class Window(arcade.Window):
             decay = random.uniform(PARTICLE_MIN_DECAY,PARTICLE_MAX_DECAY)
             scale = random.uniform(PARTICLE_MIN_SCALE,PARTICLE_MAX_SCALE)
             #Particle(asset, sprite scale, initial position [x], initial position [y], velocity [x], velocity [y], acceleration [x], acceleration [y], scale decay)
-            particle = Particle('circle_05',scale,x,y,dx,dy,ax,ay,decay)
+            particle = Particle('smoke_05',scale,x,y,dx,dy,ax,ay,decay)
 
             self.particle_list.append(particle)
 
